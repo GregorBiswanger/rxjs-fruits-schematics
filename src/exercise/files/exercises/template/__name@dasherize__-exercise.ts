@@ -1,6 +1,6 @@
 import { Exercise } from '../../shared/exercise';
 
-export class DistinctExercise implements Exercise {
+export class <%= classify(name) %>Exercise implements Exercise {
     readonly fruits = ['apple',
         'apple',
         'banana',
