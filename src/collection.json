@@ -1,9 +1,10 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "rxjs-fruits-schematics": {
-      "description": "A blank schematic.",
-      "factory": "./rxjs-fruits-schematics/index#rxjsFruitsSchematics"
+    "exercise": {
+      "description": "A schematic for create an exercise of rxjs-fruits.",
+      "factory": "./exercise/index#exercise",
+      "schema": "./exercise/schema.json"
     }
   }
 }

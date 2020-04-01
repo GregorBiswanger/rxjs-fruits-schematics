@@ -9,7 +9,7 @@ const collectionPath = path.join(__dirname, '../collection.json');
 describe('rxjs-fruits-schematics', () => {
   it('works', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const tree = runner.runSchematic('rxjs-fruits-schematics', {}, Tree.empty());
+    const tree = runner.runSchematic('exercise', { name: 'test' }, Tree.empty());
 
     expect(tree.files).toEqual([]);
   });
