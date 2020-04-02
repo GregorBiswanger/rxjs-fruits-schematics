@@ -5,24 +5,30 @@ import { SourceFile, Node } from 'typescript';
 
 export function exercise(_options: Options): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const exercisePath = normalize('src' + '/' + 'app' + '/' + 'exercises' + '/' + _options.name);
-    let exerciseFiles = url('./files/exercises/template');
 
-    const exerciseTree = apply(exerciseFiles, [
-      move(exercisePath),
-      template({
-        ...strings,
-        ..._options
-      })
+    const chainedRule = chain([
+      createExerciseFiles(_options),
+      createCypressIntegrationTest(_options),
+      updateAppRoutingModule(_options)
     ]);
-
-    const templateRule = mergeWith(exerciseTree, MergeStrategy.Default);
-    const updateAppRoutingModuleRule = updateAppRoutingModule(_options);
-    const createCypressIntegrationTestRule = createCypressIntegrationTest(_options);
-    const chainedRule = chain([templateRule, createCypressIntegrationTestRule, updateAppRoutingModuleRule]);
 
     return chainedRule(tree, _context);
   };
+}
+
+function createExerciseFiles(_options: Options): Rule {
+  const exercisePath = normalize('src' + '/' + 'app' + '/' + 'exercises' + '/' + _options.name);
+  let exerciseFiles = url('./files/exercises/template');
+
+  const exerciseTree = apply(exerciseFiles, [
+    move(exercisePath),
+    template({
+      ...strings,
+      ..._options
+    })
+  ]);
+
+  return mergeWith(exerciseTree, MergeStrategy.Default);
 }
 
 function createCypressIntegrationTest(_options: Options): Rule {
