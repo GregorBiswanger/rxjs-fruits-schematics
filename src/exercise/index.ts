@@ -5,6 +5,8 @@ import { SourceFile, Node } from 'typescript';
 
 export function exercise(_options: Options): Rule {
   return (tree: Tree, _context: SchematicContext) => {
+    _options.level = detectNewLevelVersion(tree);
+    _options.levelFileName = String(_options.level).padStart(2, '0') + '_' + _options.name;
 
     const chainedRule = chain([
       createNewLevelEntry(_options),
@@ -17,17 +19,22 @@ export function exercise(_options: Options): Rule {
   };
 }
 
+function detectNewLevelVersion(tree: Tree): number {
+  const levelsPath = 'src/app/exercises/levels.json';
+  const levels: Level[] = JSON.parse(tree.read(levelsPath)?.toString() || '');
+
+  const lastLevel: Level = [...levels].pop() || { title: '', number: 0, solved: false, urlPath: ''};
+  return lastLevel.number + 1 || 1;
+}
+
 function createNewLevelEntry(_options: Options): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const levelsPath = 'src/app/exercises/levels.json';
     const levels: Level[] = JSON.parse(tree.read(levelsPath)?.toString() || '');
 
-    const lastLevel: Level = [...levels].pop() || { title: '', number: 0, solved: false, urlPath: ''};
-    const levelNumber = lastLevel.number + 1 || 1;
-
     const newLevel: Level = {
       title: strings.dasherize(_options.name),
-      number: levelNumber,
+      number: _options.level,
       urlPath: '/' + strings.dasherize(_options.name),
       solved: false
     }
@@ -136,6 +143,7 @@ function findLineNumberOfPreviousRoute(file: SourceFile): number {
 interface Options {
   name: string;
   level: number;
+  levelFileName: string;
 }
 
 interface Level {

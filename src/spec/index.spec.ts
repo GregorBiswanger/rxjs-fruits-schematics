@@ -35,7 +35,7 @@ describe('rxjs-fruits-schematics - exercise command', () => {
       expect(tree.files[5]).toBe(`/src/app/exercises/${name}/${name}.component.scss`);
       expect(tree.files[6]).toBe(`/src/app/exercises/${name}/${name}.component.ts`);
       expect(tree.files[7]).toBe(`/src/app/exercises/${name}/${name}.module.ts`);
-      expect(tree.files[8]).toBe(`/cypress/integration/${name}.spec.ts`);
+      expect(tree.files[8]).toBe(`/cypress/integration/07_${name}.spec.ts`);
     });
   });
 
