@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "rxjs-fruits": {
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app"
+        }
+    },
+    "defaultProject": "rxjs-fruits"
+}
