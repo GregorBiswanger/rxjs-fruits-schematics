@@ -30,6 +30,7 @@
   ],
   "exclude": [
     "src/*/files/**/*",
-    "src/spec/stubs/**/*"
+    "src/spec/stubs/**/*",
+    "src/app/**/*"
   ]
 }

@@ -7,6 +7,7 @@ export function exercise(_options: Options): Rule {
   return (tree: Tree, _context: SchematicContext) => {
 
     const chainedRule = chain([
+      createNewLevelEntry(_options),
       createExerciseFiles(_options),
       createCypressIntegrationTest(_options),
       updateAppRoutingModule(_options)
@@ -14,6 +15,28 @@ export function exercise(_options: Options): Rule {
 
     return chainedRule(tree, _context);
   };
+}
+
+function createNewLevelEntry(_options: Options): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const levelsPath = 'src/app/exercises/levels.json';
+    const levels: Level[] = JSON.parse(tree.read(levelsPath)?.toString() || '');
+
+    const lastLevel: Level = [...levels].pop() || { title: '', number: 0, solved: false, urlPath: ''};
+    const levelNumber = lastLevel.number + 1 || 1;
+
+    const newLevel: Level = {
+      title: strings.dasherize(_options.name),
+      number: levelNumber,
+      urlPath: '/' + strings.dasherize(_options.name),
+      solved: false
+    }
+
+    levels.push(newLevel);
+    tree.overwrite(levelsPath, JSON.stringify(levels));
+
+    return tree;
+  }
 }
 
 function createExerciseFiles(_options: Options): Rule {
@@ -113,4 +136,11 @@ function findLineNumberOfPreviousRoute(file: SourceFile): number {
 interface Options {
   name: string;
   level: number;
+}
+
+interface Level {
+  title: string;
+  number: number;
+  urlPath: string;
+  solved: boolean;
 }
