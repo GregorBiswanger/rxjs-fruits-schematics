@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('The <%= dasherize(name) %> level <%= dasherize(level) %>', () => {
+describe('The <%= dasherize(name) %> level ', () => {
   let page: AppPage;
 
   beforeEach(() => {
