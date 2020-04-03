@@ -1,4 +1,6 @@
-# Getting Started With Schematics
+Getting Started With Schematics
+=======
+[![CircleCI](https://circleci.com/gh/GregorBiswanger/rxjs-fruits-schematics.svg?style=svg)](https://circleci.com/gh/GregorBiswanger/rxjs-fruits-schematics)
 
 This repository is a basic Schematic implementation that serves as a starting point to create and publish Schematics to NPM.
 
