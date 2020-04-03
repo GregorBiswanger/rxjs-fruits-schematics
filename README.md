@@ -1,30 +1,27 @@
-Getting Started With Schematics
+RxJS-fruits Schematics
 =======
 [![CircleCI](https://circleci.com/gh/GregorBiswanger/rxjs-fruits-schematics.svg?style=svg)](https://circleci.com/gh/GregorBiswanger/rxjs-fruits-schematics)
 
-This repository is a basic Schematic implementation that serves as a starting point to create and publish Schematics to NPM.
+This Angular Schematics is for the educational game RxJS-Fruits to add new exercises.
 
-### Testing
+### How can I create my own exercise?
 
-To test locally, install `@angular-devkit/schematics-cli` globally and use the `schematics` command line tool. That tool acts the same as the `generate` command of the Angular CLI, but also has a debug mode.
+Create a new pull request from the [RxJS-fruits project](https://github.com/GregorBiswanger/rxjs-fruits). Drag the project with Git Clone and install all necessary packages with `npm install`.  
+  Then you can add a new exercise with the following command:
 
-Check the documentation with
 ```bash
-schematics --help
+ng generate rxjs-fruits-schematics:exercise --name=FanzyRxJSOperator
 ```
 
-### Unit Testing
+### Unit Testing with Cypress
 
-`npm run test` will run the unit tests, using Jasmine as a runner and test framework.
+A spec file was created for your new exercise in the cypress/integration folder. Write a test to match your exercise. Important! New exercises will only be added if there is a test and they pass everything.
+
+`ng e2e` will run the unit tests.
 
 ### Publishing
 
-To publish, simply do:
-
-```bash
-npm run build
-npm publish
-```
+Submit your pull request with a description to us. Important! There is no guarantee that we will use it.
 
 That's it!
  
