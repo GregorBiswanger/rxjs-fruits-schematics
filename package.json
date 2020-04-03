@@ -1,6 +1,6 @@
 {
   "name": "rxjs-fruits-schematics",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A Angular schematics for create an exercise of rxjs-fruits.com.",
   "scripts": {
     "build": "tsc -p tsconfig.json",
