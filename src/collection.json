@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "exercise": {
-      "description": "A schematic for create an exercise of rxjs-fruits.",
+      "description": "A schematic for create an exercise of rxjs-fruits.com.",
       "factory": "./exercise/index#exercise",
       "schema": "./exercise/schema.json"
     }

@@ -1,16 +1,22 @@
 {
   "name": "rxjs-fruits-schematics",
-  "version": "0.0.0",
-  "description": "A blank schematics",
+  "version": "0.0.1",
+  "description": "A Angular schematics for create an exercise of rxjs-fruits.com.",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "watch": "npm run build -- -w",
     "test": "npm run build && jasmine src/**/*.spec.js"
   },
   "keywords": [
-    "schematics"
+    "schematics",
+    "angular",
+    "rxjs"
   ],
-  "author": "",
+  "author": "Gregor Biswanger",
+  "homepage": "https://www.rxjs-fruits.com",
+  "repository": {
+    "url": "https://github.com/GregorBiswanger/rxjs-fruits-schematics"
+  },
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
