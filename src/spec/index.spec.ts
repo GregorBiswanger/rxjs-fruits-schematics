@@ -12,6 +12,8 @@ describe('rxjs-fruits-schematics - exercise command', () => {
     testTree = Tree.empty();
     testTree.create('./src/app/app-routing.module.ts', fs.readFileSync('./src/spec/stubs/app/app-routing.module.ts', 'utf8'));
     testTree.create('./src/app/exercises/levels.json', fs.readFileSync('./src/spec/stubs/app/exercises/levels.json', 'utf8'));
+    testTree.create('./src/assets/i18n/de.json', fs.readFileSync('./src/spec/stubs/assets/i18n/de.json', 'utf8'));
+    testTree.create('./src/assets/i18n/en.json', fs.readFileSync('./src/spec/stubs/assets/i18n/en.json', 'utf8'));
   });
 
   describe('when creating files', () => {
@@ -19,7 +21,7 @@ describe('rxjs-fruits-schematics - exercise command', () => {
       const runner = new SchematicTestRunner('schematics', collectionPath);
       const tree = runner.runSchematic('exercise', { name: 'test' }, testTree);
 
-      expect(tree.files.length).toEqual(9);
+      expect(tree.files.length).toEqual(11);
     });
 
     it('gives files the correct names.', () => {
@@ -35,7 +37,9 @@ describe('rxjs-fruits-schematics - exercise command', () => {
       expect(tree.files[5]).toBe(`/src/app/exercises/${name}/${name}.component.scss`);
       expect(tree.files[6]).toBe(`/src/app/exercises/${name}/${name}.component.ts`);
       expect(tree.files[7]).toBe(`/src/app/exercises/${name}/${name}.module.ts`);
-      expect(tree.files[8]).toBe(`/cypress/integration/07_${name}.spec.ts`);
+      expect(tree.files[8]).toBe(`/src/assets/i18n/de.json`);
+      expect(tree.files[9]).toBe(`/src/assets/i18n/en.json`);
+      expect(tree.files[10]).toBe(`/cypress/integration/07_${name}.spec.ts`);
     });
   });
 
@@ -68,6 +72,22 @@ describe('rxjs-fruits-schematics - exercise command', () => {
         "urlPath": "/test",
         "solved": false
       });
+    });
+
+    it('should create a new translation entry in de.json', () => {
+      const runner = new SchematicTestRunner('schematics', collectionPath);
+      const tree = runner.runSchematic('exercise', { name: 'test' }, testTree);
+      const levelsContent = JSON.parse(tree.read('./src/assets/i18n/de.json')?.toString() || '');
+
+      expect(levelsContent.EXERCISES.TEST.RECIPEDESCRIPTION).toEqual("lorem ipsum.");
+    });
+
+    it('should create a new translation entry in en.json', () => {
+      const runner = new SchematicTestRunner('schematics', collectionPath);
+      const tree = runner.runSchematic('exercise', { name: 'test' }, testTree);
+      const levelsContent = JSON.parse(tree.read('./src/assets/i18n/en.json')?.toString() || '');
+
+      expect(levelsContent.EXERCISES.TEST.RECIPEDESCRIPTION).toEqual("lorem ipsum.");
     });
   });
 });

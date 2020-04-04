@@ -10,6 +10,7 @@ export function exercise(_options: Options): Rule {
 
     const chainedRule = chain([
       createNewLevelEntry(_options),
+      createNewTranslationEntries(_options),
       createExerciseFiles(_options),
       createCypressIntegrationTest(_options),
       updateAppRoutingModule(_options)
@@ -23,7 +24,7 @@ function detectNewLevelVersion(tree: Tree): number {
   const levelsPath = 'src/app/exercises/levels.json';
   const levels: Level[] = JSON.parse(tree.read(levelsPath)?.toString() || '');
 
-  const lastLevel: Level = [...levels].pop() || { title: '', number: 0, solved: false, urlPath: ''};
+  const lastLevel: Level = [...levels].pop() || { title: '', number: 0, solved: false, urlPath: '' };
   return lastLevel.number + 1 || 1;
 }
 
@@ -41,6 +42,25 @@ function createNewLevelEntry(_options: Options): Rule {
 
     levels.push(newLevel);
     tree.overwrite(levelsPath, JSON.stringify(levels));
+
+    return tree;
+  }
+}
+
+function createNewTranslationEntries(_options: Options): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const i18nPath = 'src/assets/i18n';
+    const subfiles = tree.getDir(i18nPath).subfiles;
+
+    subfiles.forEach(fileName => {
+      const filePath = normalize(i18nPath + '/' + fileName);
+      const translationFile = JSON.parse(tree.read(filePath)?.toString() || '');
+      translationFile.EXERCISES[strings.dasherize(_options.name).toUpperCase()] =  {
+        "RECIPEDESCRIPTION": "lorem ipsum."
+      }
+
+      tree.overwrite(filePath, JSON.stringify(translationFile));
+    });
 
     return tree;
   }
