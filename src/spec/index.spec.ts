@@ -14,6 +14,7 @@ describe('rxjs-fruits-schematics - exercise command', () => {
     testTree.create('./src/app/exercises/levels.json', fs.readFileSync('./src/spec/stubs/app/exercises/levels.json', 'utf8'));
     testTree.create('./src/assets/i18n/de.json', fs.readFileSync('./src/spec/stubs/assets/i18n/de.json', 'utf8'));
     testTree.create('./src/assets/i18n/en.json', fs.readFileSync('./src/spec/stubs/assets/i18n/en.json', 'utf8'));
+    testTree.create('./src/assets/i18n/rxjs-fruits-babelEdit.babel', fs.readFileSync('./src/spec/stubs/assets/i18n/rxjs-fruits-babelEdit.babel', 'utf8'));
   });
 
   describe('when creating files', () => {
@@ -21,7 +22,7 @@ describe('rxjs-fruits-schematics - exercise command', () => {
       const runner = new SchematicTestRunner('schematics', collectionPath);
       const tree = runner.runSchematic('exercise', { name: 'test' }, testTree);
 
-      expect(tree.files.length).toEqual(11);
+      expect(tree.files.length).toEqual(12);
     });
 
     it('gives files the correct names.', () => {
@@ -39,7 +40,8 @@ describe('rxjs-fruits-schematics - exercise command', () => {
       expect(tree.files[7]).toBe(`/src/app/exercises/${name}/${name}.module.ts`);
       expect(tree.files[8]).toBe(`/src/assets/i18n/de.json`);
       expect(tree.files[9]).toBe(`/src/assets/i18n/en.json`);
-      expect(tree.files[10]).toBe(`/cypress/integration/07_${name}.spec.ts`);
+      expect(tree.files[10]).toBe(`/src/assets/i18n/rxjs-fruits-babelEdit.babel`);
+      expect(tree.files[11]).toBe(`/cypress/integration/07_${name}.spec.ts`);
     });
   });
 

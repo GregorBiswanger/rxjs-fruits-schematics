@@ -53,13 +53,15 @@ function createNewTranslationEntries(_options: Options): Rule {
     const subfiles = tree.getDir(i18nPath).subfiles;
 
     subfiles.forEach(fileName => {
-      const filePath = normalize(i18nPath + '/' + fileName);
-      const translationFile = JSON.parse(tree.read(filePath)?.toString() || '');
-      translationFile.EXERCISES[strings.dasherize(_options.name).toUpperCase()] =  {
-        "RECIPEDESCRIPTION": "lorem ipsum."
+      if(fileName.includes('.json')) {
+        const filePath = normalize(i18nPath + '/' + fileName);
+        const translationFile = JSON.parse(tree.read(filePath)?.toString() || '');
+        translationFile.EXERCISES[strings.dasherize(_options.name).toUpperCase()] =  {
+          "RECIPEDESCRIPTION": "lorem ipsum."
+        }
+  
+        tree.overwrite(filePath, JSON.stringify(translationFile));
       }
-
-      tree.overwrite(filePath, JSON.stringify(translationFile));
     });
 
     return tree;
