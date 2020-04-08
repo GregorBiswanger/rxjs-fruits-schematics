@@ -69,7 +69,7 @@ function createNewTranslationEntries(_options: Options): Rule {
 }
 
 function createExerciseFiles(_options: Options): Rule {
-  const exercisePath = normalize('src' + '/' + 'app' + '/' + 'exercises' + '/' + _options.name);
+  const exercisePath = normalize('src' + '/' + 'app' + '/' + 'exercises' + '/' + strings.dasherize(_options.name));
   let exerciseFiles = url('./files/exercises/template');
 
   const exerciseTree = apply(exerciseFiles, [
