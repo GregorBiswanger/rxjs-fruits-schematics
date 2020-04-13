@@ -60,7 +60,9 @@ describe('rxjs-fruits-schematics - exercise command', () => {
       const tree = runner.runSchematic('exercise', { name: 'test' }, testTree);
       const appRouterModuleContent = tree.read('./src/app/app-routing.module.ts');
 
-      expect(appRouterModuleContent).toContain(`{ path: 'test', loadChildren: () => import('./exercises/test/test.module').then(m => m.TestModule) },`);
+      // console.log(appRouterModuleContent?.toString());
+      
+      expect(appRouterModuleContent).toContain(`{ path: 'test', loadChildren: () => import('./exercises/test/test.module').then(m => m.TestModule) }`);
     });
 
     it('should create a new level entry in levels.json', () => {

@@ -107,12 +107,12 @@ function updateAppRoutingModule(_options: Options): Rule {
     const pathName = strings.dasherize(_options.name);
     const appRoutingModulePath = 'src/app/app-routing.module.ts';
 
-    const routeContent = ` { path: '${pathName}', loadChildren: () => import('./exercises/${pathName}/${moduleName}.module').then(m => m.${exportedModuleName}Module) },\n `;
+    const routeContent = `,\n      { path: '${pathName}', loadChildren: () => import('./exercises/${pathName}/${moduleName}.module').then(m => m.${exportedModuleName}Module) }`;
     const appRoutingModuleSourceFile = getAsSourceFile(tree, appRoutingModulePath);
 
     const insertPosition = findLineNumberOfPreviousRoute(appRoutingModuleSourceFile);
     const recorder = tree.beginUpdate(appRoutingModulePath);
-    recorder.insertLeft(insertPosition - 1, routeContent);
+    recorder.insertLeft(insertPosition, routeContent);
     tree.commitUpdate(recorder);
 
     return tree;
@@ -145,9 +145,23 @@ function findLineNumberOfPreviousRoute(file: SourceFile): number {
 
                   arrayLiteralExpressionNode.forEachChild((objectLiteralExpressionNode: Node) => {
 
+
                     if (objectLiteralExpressionNode.kind === ts.SyntaxKind.ObjectLiteralExpression &&
-                      objectLiteralExpressionNode.getFullText().includes('path: \'**\'')) {
-                      insertPosition = objectLiteralExpressionNode.getStart();
+                      objectLiteralExpressionNode.getFullText().includes('path: \'\'')) {
+
+                      objectLiteralExpressionNode.forEachChild((propertyAssignmentExpressionNode: Node) => {
+                        if(propertyAssignmentExpressionNode.kind === ts.SyntaxKind.PropertyAssignment &&
+                          propertyAssignmentExpressionNode.getFullText().includes('path: \'\'')) {
+
+                            propertyAssignmentExpressionNode.forEachChild((arrayLiteralExpressionNode: Node) => {
+                              if(arrayLiteralExpressionNode.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+                                // insertPosition = arrayLiteralExpressionNode.getLastToken()?.getStart() || 0;
+                                const routes = arrayLiteralExpressionNode.getChildren();
+                                insertPosition = routes[1].getEnd();
+                              }
+                            });
+                          }
+                      })
                     }
                   });
                 }
