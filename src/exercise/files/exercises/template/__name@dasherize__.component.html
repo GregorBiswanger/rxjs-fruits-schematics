@@ -4,21 +4,15 @@
     <p>The <code class="help" [appTooltip]="tooltip"><%= dasherize(name) %></code> operator... <a
             href="https://rxjs.dev/api/operators/<%= dasherize(name) %>" target="_blank">More infos about
             <%= dasherize(name) %>.</a></p>
-    
-    <div #tooltip class="tooltip codeTooltip">
-        <pre>
-            <code [highlight]="<%= dasherize(name) %>Code"></code>
-       </pre>
-    </div>
 </div>
 <div *ngIf="currentLanguage === 'en'">
     <p>The <code class="help" [appTooltip]="tooltip"><%= dasherize(name) %></code> operator... <a
             href="https://rxjs.dev/api/operators/<%= dasherize(name) %>" target="_blank">More infos about
             <%= dasherize(name) %>.</a></p>
     
-    <div #tooltip class="tooltip codeTooltip">
-        <pre>
-            <code [highlight]="<%= dasherize(name) %>Code"></code>
-       </pre>
-    </div>
+</div>
+<div #tooltip class="tooltip codeTooltip">
+    <pre>
+        <code [highlight]="<%= dasherize(name) %>Code"></code>
+    </pre>
 </div>

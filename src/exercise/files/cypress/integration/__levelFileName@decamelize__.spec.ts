@@ -26,7 +26,7 @@ describe('The <%= dasherize(name) %> level <%= level %>', () => {
 
     page.getRecipe().should('not.have.class', 'animated shake');
     page.getRecipeItem(1).should('contain.text', '✔');
-    page.getRecipeItem(1).should('contain.text', '✔');
+    page.getRecipeItem(2).should('contain.text', '✔');
     page.getRecipeWarning().should('not.exist');
     page.getNextButton().should('not.have.attr', 'disabled');
   });
